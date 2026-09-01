@@ -1,0 +1,1459 @@
+        /* =============================================
+           リセット & ベース
+        ============================================= */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+            overflow-x: hidden;
+        }
+
+        /* ボッサボッサ 用パレット（男性向け・黒とダークブラウン基調・サブカル雑貨屋風）
+           元テンプレは「白地に黒文字＋所々ダーク背景」の構成。指定は黒＋ダークブラウンが
+           基調なので、白かった地（--bg / --greige）を暗色に反転させ、逆に地の役割だった
+           --dark はそのまま黒として維持（#hero #menu .access-info #cta footer の背景に
+           使われており、値を変えずに指示の「黒」を素直に満たせるため）。
+
+           反転にともない、それまで --dark（黒文字）を「明るい地の上の文字色」として使って
+           いた8箇所は、地が暗転すると黒文字が読めなくなる。ここだけ新規トークン --cream
+           （生成りの文字色）に差し替えた。★変数名は既存6つを変えていない。追加は1つのみ。
+
+           --mocha は元は装飾ブロックの「くすんだモカ」1箇所のみの使用だったため、
+           「ガジェットやシェイプ」の遊び心を持たせる差し色としてチール（青緑）に置き換えた。
+           --accent は外観写真（錆びた銅板ファサード）の色から採ったラスト（赤錆）オレンジ。 */
+        :root {
+            --bg: #150F0B;       /* 主要地：黒に近いダークブラウン */
+            --dark: #1A1A1A;     /* 黒。#hero #menu .access-info #cta footer などの地は不変 */
+            --greige: #2B2019;   /* ダークブラウン。#about #flow の地（--bgよりわずかに明るい階調） */
+            --mocha: #2E9C90;    /* チール。.photo-accent-block（写真背後の図形）だけに使う遊び色 */
+            --accent: #D9701E;   /* ラストオレンジ。外観の錆びた銅板ファサードから */
+            --accent-hover: #E28039; /* accentより明るいオレンジ。hoverで「灯る」方向に変更（元は暗くする方向だった） */
+            --cream: #EDE6DD;    /* ★追加トークン。暗転した地の上の本文・見出し文字色 */
+            --font-sans: 'Inter', 'Noto Sans JP', sans-serif;
+            --font-serif: 'Noto Serif JP', serif;
+            --font-syne: 'Syne', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            /* 元は var(--dark)。地(--bg)が暗転したため文字色は --cream に。 */
+            color: var(--cream);
+            background-color: var(--bg);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.8;
+            letter-spacing: 0.04em;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* スクロールバー */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: var(--dark); }
+        ::-webkit-scrollbar-thumb { background: #555; border-radius: 2px; }
+
+        /* =============================================
+           ユーティリティ
+        ============================================= */
+        .writing-vertical {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+        }
+
+        .container {
+            max-width: 90%;
+            margin: 0 auto;
+        }
+
+        .container--narrow {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* =============================================
+           スクロールアニメーション
+        ============================================= */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-left.active { opacity: 1; transform: translateX(0); }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-right.active { opacity: 1; transform: translateX(0); }
+
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.93);
+            transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-scale.active { opacity: 1; transform: scale(1); }
+
+        .delay-100 { transition-delay: 0.1s !important; }
+        .delay-200 { transition-delay: 0.2s !important; }
+        .delay-300 { transition-delay: 0.3s !important; }
+
+        /* =============================================
+           ヘッダー
+        ============================================= */
+        #header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            padding: 1.8rem 0;
+            transition: background 0.5s ease, padding 0.4s ease, backdrop-filter 0.5s ease;
+        }
+
+        #header.scrolled {
+            background: rgba(26, 26, 26, 0.96);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .header-inner {
+            max-width: 90%;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-family: var(--font-syne);
+            font-weight: 800;
+            font-size: 1.6rem;
+            letter-spacing: -0.03em;
+            color: #fff;
+            mix-blend-mode: difference;
+        }
+
+        .nav-desktop {
+            display: none;
+            align-items: center;
+            gap: 2.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .nav-desktop { display: flex; }
+        }
+
+        .nav-desktop a {
+            font-family: var(--font-syne);
+            font-weight: 700;
+            font-size: 0.7rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #fff;
+            transition: color 0.3s;
+        }
+
+        .nav-desktop a:hover { color: var(--accent); }
+
+        .nav-cta {
+            background: var(--accent) !important;
+            /* 元は #fff。accentが白文字コントラスト不足(3.3程度)のため黒文字に変更（5.2）。 */
+            color: var(--dark) !important;
+            padding: 0.75rem 2rem;
+            transition: background 0.3s, color 0.3s !important;
+        }
+
+        .nav-cta:hover {
+            background: #fff !important;
+            color: var(--dark) !important;
+        }
+
+        /* ハンバーガー */
+        #menu-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #fff;
+            mix-blend-mode: difference;
+            padding: 0.5rem;
+        }
+
+        @media (min-width: 768px) {
+            #menu-btn { display: none; }
+        }
+
+        #menu-btn svg {
+            width: 2rem;
+            height: 2rem;
+        }
+
+        /* モバイルメニュー */
+        #mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: var(--dark);
+            border-top: 1px solid rgba(255,255,255,0.08);
+            flex-direction: column;
+            align-items: center;
+            padding: 2.5rem 0;
+            gap: 2rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        #mobile-menu.open {
+            display: flex;
+        }
+
+        #mobile-menu a {
+            font-family: var(--font-syne);
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        #mobile-menu .mobile-cta {
+            background: var(--accent);
+            /* #mobile-menu a の白文字(#fff)を継承すると accent 地で 3.34 しか出ないため上書き。 */
+            color: var(--dark) !important;
+            padding: 1rem 2.5rem;
+            margin-top: 0.5rem;
+        }
+
+        /* =============================================
+           ヒーローセクション
+        ============================================= */
+        #hero {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            background: var(--dark);
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .hero-slideshow {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            /* 元は 0.45。実写3枚（特に外観の錆びた銅板ファサード）に合成して実測したところ、
+               白文字の hero-catchcopy が最悪 2.88 までしか出ず、大文字扱いの基準 3.0 を
+               僅かに割っていたため 0.55 に強めた（最悪値 3.90 に改善）。 */
+            background: rgba(26,26,26,0.55);
+            z-index: 5;
+            mix-blend-mode: multiply;
+        }
+
+        .film-grain {
+            position: absolute;
+            inset: 0;
+            z-index: 8;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.12;
+            mix-blend-mode: overlay;
+        }
+
+        /*
+         * スライドアニメーション（linear必須）
+         * ease-in-outはキーフレーム割合を歪めるため使用不可
+         *
+         * 18秒サイクル、3枚、各スライド6秒表示
+         * フェード時間: 1秒
+         *   0s  ～  1s : フェードイン   → 0%   ～ 5.56%
+         *   1s  ～  6s : 完全表示       → 5.56% ～ 33.33%
+         *   6s  ～  7s : フェードアウト → 33.33% ～ 38.89%
+         *   7s  ～ 18s : 非表示         → 38.89% ～ 100%
+         *
+         * 切り替わりの1秒間は前スライドがアウト・次スライドが
+         * イン中のため、合計opacity≒1に保たれなめらかに繋がる
+         */
+        @keyframes crossfade {
+            0%      { opacity: 0; }
+            5.56%   { opacity: 1; }
+            33.33%  { opacity: 1; }
+            38.89%  { opacity: 0; }
+            100%    { opacity: 0; }
+        }
+
+        .hero-slide {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            animation: crossfade 18s infinite linear;
+            filter: grayscale(30%) contrast(1.1) sepia(8%);
+        }
+
+        /* nth-child ではなく nth-of-type を使う
+         * 親要素内に div（overlay/grain）が先に存在するため
+         * nth-child だとカウントがズレて全スライドに誤ったdelayが当たる
+         * nth-of-type は img タグだけを 1/2/3 と正しくカウントする */
+        .hero-slide:nth-of-type(1) { animation-delay: 0s; }
+        .hero-slide:nth-of-type(2) { animation-delay: 6s; }
+        .hero-slide:nth-of-type(3) { animation-delay: 12s; }
+
+        .hero-content {
+            position: relative;
+            z-index: 20;
+            width: 100%;
+            padding: 0 2rem;
+            padding-top: 6rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .hero-catchcopy {
+            writing-mode: vertical-rl;
+            font-family: var(--font-serif);
+            font-weight: 700;
+            color: #fff;
+            font-size: clamp(1.35rem, 3.2vw, 3rem);
+            letter-spacing: 0.4em;
+            line-height: 1.7;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            margin-left: 2rem;
+            max-height: 75vh; /* はみ出し防止 */
+            overflow: hidden;
+            animation: fadeInLeft 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
+        }
+
+        @media (min-width: 480px) {
+            .hero-catchcopy {
+                font-size: clamp(1.5rem, 3.5vw, 3.2rem);
+                margin-left: 3rem;
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+
+        .hero-scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: rgba(255,255,255,0.6);
+            font-family: var(--font-syne);
+            font-size: 0.6rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0) 100%);
+            animation: scrollDown 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollDown {
+            0%   { transform: scaleY(0) translateY(-100%); opacity: 0; }
+            40%  { transform: scaleY(1) translateY(0%); opacity: 1; }
+            80%  { transform: scaleY(1) translateY(0%); opacity: 1; }
+            100% { transform: scaleY(0) translateY(100%); opacity: 0; }
+        }
+
+        @media (min-width: 768px) {
+            .hero-content { padding-left: 6rem; }
+            .hero-catchcopy { margin-left: 5rem; }
+        }
+
+        /* =============================================
+           ABOUT
+        ============================================= */
+        #about {
+            padding: 8rem 0 10rem;
+            background: var(--greige);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-bg-text {
+            position: absolute;
+            top: -0.5rem;
+            left: -1.5rem;
+            font-family: var(--font-syne);
+            font-weight: 800;
+            font-size: clamp(6rem, 18vw, 18rem);
+            color: rgba(255,255,255,0.7);
+            line-height: 1;
+            pointer-events: none;
+            user-select: none;
+            z-index: 0;
+            scale: 0.82 1;
+            transform-origin: left top;
+        }
+
+        .about-inner {
+            max-width: 85%;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4rem;
+        }
+
+        @media (min-width: 768px) {
+            .about-inner {
+                flex-direction: row;
+                align-items: center;
+                gap: 5rem;
+            }
+        }
+
+        .about-photos {
+            position: relative;
+            width: 100%;
+            height: 420px;
+            flex-shrink: 0;
+            order: 2;
+        }
+
+        @media (min-width: 768px) {
+            .about-photos {
+                width: 42%;
+                height: 560px;
+                order: 1;
+            }
+        }
+
+        .photo-back {
+            position: absolute;
+            top: 0; right: 0;
+            width: 75%;
+            aspect-ratio: 4/5;
+            transform: rotate(6deg);
+            border: 12px solid #fff;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            overflow: hidden;
+            z-index: 10;
+            transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), z-index 0s 0.35s;
+        }
+
+        .photo-back:hover {
+            transform: rotate(2deg) scale(1.04);
+            z-index: 30;
+            transition-delay: 0s;
+        }
+
+        .photo-front {
+            position: absolute;
+            bottom: 1rem; left: 0;
+            width: 80%;
+            aspect-ratio: 4/5;
+            transform: rotate(-3deg);
+            border: 12px solid #fff;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+            overflow: hidden;
+            z-index: 20;
+            transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), z-index 0s 0.35s;
+        }
+
+        .photo-front:hover {
+            transform: rotate(-1deg) scale(1.04);
+            z-index: 30;
+            transition-delay: 0s;
+        }
+
+        .photo-back img,
+        .photo-front img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(20%);
+        }
+
+        .photo-accent-block {
+            position: absolute;
+            bottom: -1rem; right: -1rem;
+            width: 45%;
+            height: 45%;
+            background: var(--mocha);
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        .photo-label {
+            position: absolute;
+            left: -1.5rem;
+            top: 30%;
+            font-family: var(--font-syne);
+            font-size: 0.65rem;
+            letter-spacing: 0.3em;
+            writing-mode: vertical-rl;
+            /* 元は var(--dark)。#about の地が暗転したため --cream に。 */
+            color: var(--cream);
+            z-index: 30;
+        }
+
+        .about-text {
+            width: 100%;
+            order: 1;
+            padding-top: 5rem;
+        }
+
+        @media (min-width: 768px) {
+            .about-text {
+                width: 58%;
+                order: 2;
+                padding-top: 0;
+            }
+        }
+
+        .about-heading {
+            font-family: var(--font-serif);
+            font-weight: 700;
+            font-size: clamp(1.8rem, 3.5vw, 3rem);
+            /* 元は var(--dark)。#about の地が暗転したため --cream に。 */
+            color: var(--cream);
+            line-height: 1.5;
+            margin-bottom: 1.8rem;
+        }
+
+        .accent-line {
+            width: 4rem;
+            height: 3px;
+            background: var(--accent);
+            margin-bottom: 2rem;
+        }
+
+        .about-body {
+            font-size: 0.9rem;
+            /* 元は rgba(26,26,26,0.75)（暗文字）。#about の地が暗転したため cream 系に。 */
+            color: rgba(237,230,221,0.78);
+            line-height: 2;
+        }
+
+        @media (min-width: 768px) {
+            .about-body { font-size: 1rem; }
+        }
+
+        /* =============================================
+           STYLE
+        ============================================= */
+        #style {
+            padding-top: 7rem;
+            padding-bottom: 12rem;
+            background: var(--bg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .style-bg-shape {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .style-bg-shape img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            object-position: center bottom;
+        }
+
+        .style-inner {
+            max-width: 90%;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .style-header {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 5rem;
+        }
+
+        @media (min-width: 768px) {
+            .style-header {
+                flex-direction: row;
+                align-items: flex-end;
+                margin-bottom: 8rem;
+            }
+        }
+
+        .style-big-title {
+            font-family: var(--font-syne);
+            font-weight: 800;
+            font-size: clamp(4rem, 10vw, 9rem);
+            /* 元は var(--dark)。#style の地(--bg)が暗転したため --cream に。 */
+            color: var(--cream);
+            line-height: 1;
+            letter-spacing: -0.04em;
+            scale: 0.82 1;
+            transform-origin: left center;
+        }
+
+        .style-subtitle {
+            font-family: var(--font-serif);
+            font-size: clamp(0.85rem, 1.5vw, 1.1rem);
+            /* 元は rgba(26,26,26,0.5)。地が暗転したため cream 系に。 */
+            color: rgba(237,230,221,0.6);
+            margin-bottom: 0.3rem;
+        }
+
+        /* カテゴリ見出し */
+        .style-category-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .style-category-title {
+            font-family: var(--font-syne);
+            font-weight: 800;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            letter-spacing: -0.04em;
+            /* 元は var(--dark)。地が暗転したため --cream に。 */
+            color: var(--cream);
+            white-space: nowrap;
+            scale: 0.82 1;
+            transform-origin: left center;
+        }
+
+        .style-category-line {
+            flex-grow: 1;
+            height: 1px;
+            /* 元は rgba(26,26,26,0.15)（暗地の上での暗い区切り線）。地が暗転したため明色系に。 */
+            background: rgba(237,230,221,0.2);
+        }
+
+        .style-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: flex-start;
+            margin-top: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .style-cards {
+                flex-direction: row;
+                gap: 1.5rem;
+                /* ★この店舗のみの変更：LADIESの実写が5枚（元テンプレは4枚=25%×4で
+                   ちょうど1行）のため、5枚目が右にはみ出さないよう wrap を追加した。
+                   4枚のときは影響なし（25%×4=100%で元々はみ出さないため）。
+                   justify-content:center も追加。1行目は4枚で100%埋まるため見た目は
+                   変わらず、2行目に落ちる5枚目だけが中央に揃う。 */
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
+        .style-card {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4/5;
+            cursor: pointer;
+            border: 6px solid #fff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+            overflow: hidden;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), z-index 0s 0.25s, box-shadow 0.5s;
+            z-index: 10;
+        }
+
+        @media (min-width: 768px) {
+            .style-card { width: 25%; }
+
+            .style-card:nth-child(even) {
+                margin-top: 7rem;
+            }
+        }
+
+        .style-card:hover {
+            transform: scale(1.05);
+            z-index: 50;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+            transition-delay: 0s;
+        }
+
+        .style-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(30%);
+            transition: transform 2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .style-card:hover img {
+            transform: scale(1.08);
+        }
+
+        .style-card-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(26,26,26,0.88);
+            opacity: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1.5rem;
+            transition: opacity 0.5s ease;
+        }
+
+        .style-card:hover .style-card-overlay { opacity: 1; }
+
+        .style-card-overlay h4 {
+            font-family: var(--font-syne);
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: #fff;
+            transform: translateY(1rem);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .style-card:hover .style-card-overlay h4 {
+            transform: translateY(0);
+        }
+
+        .style-card-overlay p {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.8);
+            margin-top: 0.8rem;
+            line-height: 1.7;
+            transform: translateY(1rem);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.05s;
+        }
+
+        .style-card:hover .style-card-overlay p {
+            transform: translateY(0);
+        }
+
+        /* メンズ用アクセントカラー */
+        .style-card--mens .style-card-overlay {
+            background: rgba(196,117,106,0.95);
+        }
+
+        .mens-section {
+            margin-top: 8rem;
+        }
+
+        @media (min-width: 768px) {
+            .mens-section { margin-top: 12rem; }
+        }
+
+        .mens-category-header {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            /* 元は var(--dark)。地が暗転したため --cream に。 */
+            color: var(--cream);
+        }
+
+        .mens-category-title {
+            font-family: var(--font-syne);
+            font-weight: 800;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            letter-spacing: -0.04em;
+            white-space: nowrap;
+            scale: 0.82 1;
+            transform-origin: right center;
+        }
+
+        .mens-category-line {
+            flex-grow: 1;
+            max-width: 20rem;
+            height: 1px;
+            /* 元は rgba(26,26,26,0.25)。地が暗転したため明色系に。 */
+            background: rgba(237,230,221,0.25);
+        }
+
+        .mens-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .mens-cards {
+                flex-direction: row;
+                width: 80%;
+                margin-left: auto;
+                margin-right: auto;
+                gap: 2rem;
+            }
+        }
+
+        .mens-cards .style-card {
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .mens-cards .style-card { width: 33.33%; }
+        }
+
+        /* =============================================
+           FLOW
+        ============================================= */
+        #flow {
+            padding: 8rem 0 10rem;
+            background: var(--greige);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .flow-inner {
+            max-width: 85%;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .flow-big-title {
+            font-family: var(--font-syne);
+            font-weight: 800;
+            font-size: clamp(4rem, 10vw, 9rem);
+            /* 元は var(--dark)。#flow の地(--greige)が暗転したため --cream に。 */
+            color: var(--cream);
+            letter-spacing: -0.04em;
+            line-height: 1;
+            text-align: center;
+            margin-bottom: 6rem;
+            scale: 0.82 1;
+        }
+
+        @media (min-width: 768px) {
+            .flow-big-title { margin-bottom: 10rem; }
+        }
+
+        .flow-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 7rem;
+        }
+
+        @media (min-width: 768px) {
+            .flow-steps { gap: 10rem; }
+        }
+
+        .flow-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        @media (min-width: 768px) {
+            .flow-step { flex-direction: row; gap: 5rem; }
+            .flow-step--reverse { flex-direction: row-reverse; }
+        }
+
+        .flow-step-visual {
+            position: relative;
+            width: 100%;
+            flex-shrink: 0;
+        }
+
+        @media (min-width: 768px) {
+            .flow-step-visual { width: 50%; }
+        }
+
+        .flow-step-number {
+            position: absolute;
+            font-family: var(--font-syne);
+            /* 800 は字幅が極端に広がるため 700 に（Syne の極太は拡張字形）。
+               太さは字幅の変わらない text-stroke で補う */
+            font-weight: 700;
+            -webkit-text-stroke: 2.5px currentColor;
+            font-size: clamp(4.5rem, 9vw, 7.5rem);
+            color: rgba(255,255,255,0.9);
+            line-height: 1;
+            z-index: 0;
+            mix-blend-mode: overlay;
+            pointer-events: none;
+        }
+
+        /* 数字は写真の背後。先頭字（03 は末尾字）が半分以上覗く位置に配置 */
+        .flow-step:nth-child(1) .flow-step-number { top: -1.5rem; left: 0; }
+        .flow-step:nth-child(2) .flow-step-number { bottom: -5rem; right: 0; }
+        .flow-step:nth-child(3) .flow-step-number { top: -7rem; left: 0; }
+        .flow-step:nth-child(4) .flow-step-number { bottom: -4.5rem; right: 0; }
+
+        .flow-step-img {
+            position: relative;
+            z-index: 10;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+        }
+
+        .flow-step:nth-child(1) .flow-step-img {
+            width: 80%;
+            margin-left: auto;
+            aspect-ratio: 4/5;
+            transform: rotate(2deg);
+        }
+
+        .flow-step:nth-child(2) .flow-step-img {
+            width: 90%;
+            aspect-ratio: 16/10;
+            transform: rotate(-2deg);
+        }
+
+        .flow-step:nth-child(3) .flow-step-img {
+            width: 75%;
+            margin: 0 auto;
+            aspect-ratio: 1/1;
+            transform: rotate(3deg);
+        }
+
+        .flow-step:nth-child(4) .flow-step-img {
+            width: 85%;
+            aspect-ratio: 3/4;
+            transform: rotate(-1deg);
+        }
+
+        .flow-step-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.05);
+            filter: grayscale(20%);
+        }
+
+        .flow-step-text {
+            width: 100%;
+            position: relative;
+            z-index: 20;
+        }
+
+        @media (min-width: 768px) {
+            .flow-step-text { width: 50%; }
+            .flow-step--reverse .flow-step-text { text-align: right; }
+        }
+
+        .flow-step-label {
+            font-family: var(--font-syne);
+            font-weight: 700;
+            font-size: 0.75rem;
+            letter-spacing: 0.25em;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .flow-step-heading {
+            font-family: var(--font-serif);
+            font-weight: 700;
+            font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+            /* 元は var(--dark)。地が暗転したため --cream に。 */
+            color: var(--cream);
+            margin-bottom: 1.2rem;
+        }
+
+        .flow-step-body {
+            font-size: 0.88rem;
+            /* 元は rgba(26,26,26,0.75)。地が暗転したため cream 系に。 */
+            color: rgba(237,230,221,0.78);
+            line-height: 2;
+        }
+
+        @media (min-width: 768px) {
+            .flow-step-body { font-size: 1rem; }
+        }
+
+        /* =============================================
+           MENU & PRICE
+        ============================================= */
+        #menu {
+            padding: 8rem 0 10rem;
+            background: var(--dark);
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-inner {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .menu-big-title {
+            font-family: var(--font-syne);
+            font-weight: 800;
+            font-size: clamp(2.5rem, 7vw, 5rem);
+            letter-spacing: -0.04em;
+            text-align: center;
+            margin-bottom: 0.7rem;
+            scale: 0.82 1;
+        }
+
+        .menu-subtitle {
+            font-size: 0.82rem;
+            text-align: center;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 5rem;
+            letter-spacing: 0.08em;
+        }
+
+        .menu-blocks {
+            display: flex;
+            flex-direction: column;
+            gap: 4rem;
+        }
+
+        .menu-block-heading {
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .menu-block-heading span {
+            display: block;
+            width: 3rem;
+            height: 1px;
+            background: var(--accent);
+        }
+
+        .menu-items {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .menu-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            padding-bottom: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .menu-item:hover {
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        @media (min-width: 480px) {
+            .menu-item {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: flex-end;
+            }
+        }
+
+        .menu-item-name {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.85);
+            transition: color 0.3s;
+        }
+
+        .menu-item:hover .menu-item-name { color: #fff; }
+
+        .menu-item-price {
+            font-family: var(--font-syne);
+            font-weight: 700;
+            font-size: 1.6rem;
+            flex-shrink: 0;
+        }
+
+        .menu-item-price--accent { color: var(--accent); }
+
+        .menu-note {
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.35);
+            text-align: center;
+            margin-top: 3rem;
+            letter-spacing: 0.05em;
+        }
+
+        /* =============================================
+           ACCESS
+        ============================================= */
+        #access {
+            padding: 8rem 0 10rem;
+            background: var(--bg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .access-inner {
+            max-width: 95%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        @media (min-width: 768px) {
+            .access-inner {
+                flex-direction: row;
+                align-items: center;
+                gap: 3rem;
+            }
+        }
+
+        .access-info {
+            width: 100%;
+            background: var(--dark);
+            color: #fff;
+            padding: 3.5rem 2.5rem;
+            position: relative;
+            z-index: 20;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+        }
+
+        @media (min-width: 768px) {
+            .access-info {
+                width: 38%;
+                flex-shrink: 0;
+                padding: 5rem;
+            }
+        }
+
+        .access-big-title {
+            font-family: var(--font-syne);
+            font-weight: 800;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            letter-spacing: -0.04em;
+            margin-bottom: 3rem;
+            scale: 0.82 1;
+            transform-origin: left center;
+        }
+
+        .access-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1.8rem;
+            font-size: 0.88rem;
+            color: rgba(255,255,255,0.75);
+        }
+
+        @media (min-width: 768px) {
+            .access-details { font-size: 0.95rem; }
+        }
+
+        .access-detail-row {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            padding-bottom: 1.5rem;
+        }
+
+        @media (min-width: 480px) {
+            .access-detail-row {
+                flex-direction: row;
+                align-items: flex-start;
+                gap: 2rem;
+            }
+        }
+
+        .access-detail-label {
+            font-family: var(--font-syne);
+            font-weight: 700;
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent);
+            width: 5.5rem;
+            flex-shrink: 0;
+            padding-top: 0.1rem;
+        }
+
+        .access-detail-value {
+            font-family: var(--font-serif);
+            line-height: 1.8;
+        }
+
+        .access-detail-note {
+            font-family: var(--font-sans);
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .access-map {
+            width: 100%;
+            height: 420px;
+            position: relative;
+            z-index: 10;
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .access-map {
+                flex: 1;
+                height: 560px;
+            }
+        }
+
+        .access-map iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            filter: grayscale(40%) contrast(1.05);
+        }
+
+        /* =============================================
+           CTA
+        ============================================= */
+        #cta {
+            padding: 8rem 0;
+            background: var(--dark);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 70vh;
+        }
+
+        .cta-bg-word {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-syne);
+            font-weight: 800;
+            font-size: clamp(6rem, 28vw, 28rem);
+            color: rgba(255,255,255,0.04);
+            line-height: 1;
+            pointer-events: none;
+            user-select: none;
+            z-index: 0;
+            letter-spacing: -0.05em;
+        }
+
+        .cta-inner {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 0 1.5rem;
+        }
+
+        .cta-heading {
+            font-family: var(--font-syne);
+            font-weight: 800;
+            font-size: clamp(3rem, 9vw, 8rem);
+            color: #fff;
+            line-height: 1;
+            letter-spacing: -0.04em;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            scale: 0.82 1;
+        }
+
+        .cta-tagline {
+            font-family: var(--font-serif);
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            color: rgba(255,255,255,0.85);
+            letter-spacing: 0.2em;
+            margin-bottom: 4rem;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            background: var(--accent);
+            /* 元は #fff。accentは白文字だとコントラスト不足(3.3程度)のため黒文字に変更（5.2）。 */
+            color: var(--dark);
+            padding: 1.3rem 3.5rem;
+            font-family: var(--font-syne);
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+            transition: background 0.4s, color 0.4s;
+        }
+
+        .cta-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 0; height: 0;
+            background: rgba(255,255,255,0.15);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .cta-btn:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+
+        .cta-btn svg {
+            width: 1.2rem;
+            height: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .cta-btn:hover svg {
+            transform: translateX(6px);
+        }
+
+        /* =============================================
+           フッター
+        ============================================= */
+        footer {
+            background: var(--dark);
+            padding: 3rem 0;
+            border-top: 1px solid rgba(255,255,255,0.07);
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-family: var(--font-syne);
+            font-weight: 800;
+            font-size: 1.8rem;
+            color: #fff;
+            letter-spacing: -0.03em;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .footer-copy {
+            font-family: var(--font-syne);
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.25);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+        /* =============================================
+           ページトップボタン
+        ============================================= */
+        #page-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 80;
+            width: 3rem;
+            height: 3rem;
+            background: var(--accent);
+            /* 元は #fff。accentは白文字だとコントラスト不足のため黒文字に変更。 */
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(1rem);
+            transition: opacity 0.4s, transform 0.4s;
+            cursor: pointer;
+            border: none;
+        }
+
+        #page-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #page-top:hover {
+            background: var(--accent-hover);
+        }
+
+        /* =============================================
+           レスポンシブ細調整
+        ============================================= */
+        @media (max-width: 767px) {
+            .about-photos { height: 360px; margin-top: 2rem; }
+            .flow-step-img { margin: 0; }
+            .flow-step:nth-child(1) .flow-step-img,
+            .flow-step:nth-child(3) .flow-step-img { width: 90%; margin: 0 auto; }
+            .flow-step:nth-child(2) .flow-step-img,
+            .flow-step:nth-child(4) .flow-step-img { width: 90%; }
+        }
+
+        /* =============================================
+           prefers-reduced-motion 対応
+
+           .reveal 系は opacity:0 で始まり、JS が .active を付けて表示する。
+           動きを減らす設定では「移動」はやめ、フェードだけ残す。
+           （完全に無効化する必要はない。表示されない事故への保険は
+             .no-js と IntersectionObserver 非対応チェックで担保する）
+        ============================================= */
+        @media (prefers-reduced-motion: reduce) {
+            .reveal, .reveal-left, .reveal-right, .reveal-scale {
+                transform: none !important;
+                transition: opacity 0.5s ease !important;
+            }
+            .reveal.active, .reveal-left.active,
+            .reveal-right.active, .reveal-scale.active {
+                opacity: 1 !important;
+                transform: none !important;
+            }
+            .hero-slide { animation: none; opacity: 0; }
+            .hero-slide:nth-of-type(1) { opacity: 1; }
+        }
+
+        /* JS が動かない環境では最初から全部見せる（保険） */
+        .no-js .reveal, .no-js .reveal-left,
+        .no-js .reveal-right, .no-js .reveal-scale {
+            opacity: 1 !important;
+            transform: none !important;
+        }

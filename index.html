@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="ja" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 提案用サンプルのため検索エンジンには載せない（このプロジェクトの全サイト共通・削除しない） -->
+    <meta name="robots" content="noindex, nofollow">
+    <title>ボッサボッサ｜川口駅東口徒歩2分の理容室</title>
+    <meta name="description" content="埼玉県川口市本町、川口駅東口から徒歩2分。セット面4席の小さなお店ボッサボッサ。錆びた鉄扉と雑貨に囲まれた空間で、型にはまらない一人ひとりのスタイルをご提案します。※本サイトは提案用サンプルです。">
+    <meta property="og:title" content="ボッサボッサ｜川口駅東口徒歩2分の理容室">
+    <meta property="og:description" content="セット面4席、雑貨に囲まれた小さなお店。型にはまらないスタイルを一緒に探します。">
+    <meta property="og:type" content="website">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;500;700&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- =============================================
+         ヘッダー
+    ============================================= -->
+    <header id="header">
+        <div class="header-inner">
+            <a href="#" class="logo">bossabossa</a>
+
+            <nav class="nav-desktop">
+                <a href="#about">About</a>
+                <a href="#style">Style</a>
+                <a href="#flow">Flow</a>
+                <a href="#menu">Menu</a>
+                <a href="#access">Access</a>
+                <a href="#cta" class="nav-cta">Book Now</a>
+            </nav>
+
+            <button id="menu-btn" aria-label="メニューを開く" onclick="toggleMobileMenu()">
+                <svg id="menu-icon-open" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5" />
+                </svg>
+                <svg id="menu-icon-close" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="display:none;">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+
+        <nav id="mobile-menu">
+            <a href="#about" onclick="toggleMobileMenu()">About</a>
+            <a href="#style" onclick="toggleMobileMenu()">Style</a>
+            <a href="#flow" onclick="toggleMobileMenu()">Flow</a>
+            <a href="#menu" onclick="toggleMobileMenu()">Menu</a>
+            <a href="#access" onclick="toggleMobileMenu()">Access</a>
+            <a href="#cta" onclick="toggleMobileMenu()" class="mobile-cta">Book Now</a>
+        </nav>
+    </header>
+
+    <!-- =============================================
+         ヒーロー
+    ============================================= -->
+    <section id="hero">
+        <div class="hero-slideshow">
+            <div class="hero-overlay"></div>
+            <div class="film-grain"></div>
+            <img class="hero-slide"
+                 src="assets/images/hero_01_storefront.jpg"
+                 alt="ボッサボッサの外観。錆加工の鉄板ファサードと「ボッサボッサ」のプレート">
+            <img class="hero-slide"
+                 src="assets/images/hero_02_interior.jpg"
+                 alt="店内のセット面と鏡">
+            <img class="hero-slide"
+                 src="assets/images/hero_03_toywall.jpg"
+                 alt="壁一面に飾られた小物・フィギュア">
+        </div>
+
+        <div class="hero-content">
+            <h1 class="hero-catchcopy writing-vertical">
+                かたちにはまらない、<br>
+                じぶんの髪へ。
+            </h1>
+        </div>
+
+        <div class="hero-scroll-indicator">
+            <div class="scroll-line"></div>
+            <span>Scroll</span>
+        </div>
+    </section>
+
+    <!-- =============================================
+         ABOUT
+    ============================================= -->
+    <section id="about">
+        <div class="about-bg-text" aria-hidden="true">ABOUT</div>
+
+        <div class="about-inner">
+            <!-- 写真エリア -->
+            <div class="about-photos reveal-left">
+                <div class="photo-back">
+                    <img src="assets/images/about_01_woodcarving.jpg" alt="店内に飾られた木彫りの動物オブジェ">
+                </div>
+                <div class="photo-front">
+                    <img src="assets/images/about_02_bookshelf.jpg" alt="漫画・専門書が並ぶ棚">
+                </div>
+                <div class="photo-accent-block"></div>
+                <p class="photo-label writing-vertical">4 SEATS ONLY</p>
+            </div>
+
+            <!-- テキスト -->
+            <div class="about-text reveal-right">
+                <h2 class="about-heading">
+                    雑貨屋の奥に、<br>理容室がある。
+                </h2>
+                <div class="accent-line"></div>
+                <p class="about-body">
+                    ボッサボッサは、川口駅東口から徒歩2分。<br>
+                    錆びた鉄扉の奥に、椅子が4つだけ。<br><br>
+                    木彫りの置物や、棚いっぱいの漫画。<br>
+                    店主の趣味が滲む雑然とした空間で、型にはめない一人ひとりのスタイルを一緒に探します。<br>
+                    お一人お一人にゆっくり向き合える、少人数制のお店です。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- =============================================
+         STYLE
+         ※実写がLADIES5枚・MENS2枚だったため、元テンプレの4枚+3枚から変更している。
+           style.css側で .style-cards に flex-wrap を追加して対応（詳細はCSSコメント）。
+    ============================================= -->
+    <section id="style">
+        <!-- 背景：レンズデザイン画像 -->
+        <div class="style-bg-shape" aria-hidden="true">
+            <img src="assets/images/style_bg_lens.svg" alt="">
+        </div>
+
+
+        <div class="style-inner">
+            <!-- ヘッダー -->
+            <div class="style-header reveal">
+                <h2 class="style-big-title">STYLE</h2>
+                <p class="style-subtitle">型は決めない。似合わせる。</p>
+            </div>
+
+            <!-- LADIES -->
+            <div>
+                <div class="style-category-header reveal">
+                    <h3 class="style-category-title">LADIES</h3>
+                    <div class="style-category-line"></div>
+                </div>
+
+                <div class="style-cards">
+                    <div class="style-card reveal" style="transition-delay: 0s;">
+                        <img src="assets/images/style_ladies_01.jpg" alt="軽やかなショートボブ（後ろ姿）">
+                        <div class="style-card-overlay">
+                            <h4>Short</h4>
+                            <p>襟足をすっきり見せた、動きのあるショートボブ。</p>
+                        </div>
+                    </div>
+
+                    <div class="style-card reveal" style="transition-delay: 0.1s;">
+                        <img src="assets/images/style_ladies_02.jpg" alt="揺れるウェーブボブ">
+                        <div class="style-card-overlay">
+                            <h4>Wave</h4>
+                            <p>顔まわりにニュアンスを効かせた、やわらかい巻きのボブ。</p>
+                        </div>
+                    </div>
+
+                    <div class="style-card reveal" style="transition-delay: 0.2s;">
+                        <img src="assets/images/style_ladies_03.jpg" alt="潔いピクシーカット（後ろ姿）">
+                        <div class="style-card-overlay">
+                            <h4>Pixie</h4>
+                            <p>首まわりをすっきりと刈り上げた、凛としたピクシーカット。</p>
+                        </div>
+                    </div>
+
+                    <div class="style-card reveal" style="transition-delay: 0.3s;">
+                        <img src="assets/images/style_ladies_04.jpg" alt="レッド〜オレンジのグラデーションを効かせたロングヘア">
+                        <div class="style-card-overlay">
+                            <h4>Color</h4>
+                            <p>レッド〜オレンジのグラデーションを効かせたデザインカラー。</p>
+                        </div>
+                    </div>
+
+                    <div class="style-card reveal" style="transition-delay: 0.4s;">
+                        <img src="assets/images/style_ladies_05.jpg" alt="ピンクブラウンのショート">
+                        <div class="style-card-overlay">
+                            <h4>Rose</h4>
+                            <p>ほんのり赤みを効かせた、ピンクブラウンのショート。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MENS -->
+            <div class="mens-section reveal">
+                <div class="mens-category-header">
+                    <div class="mens-category-line"></div>
+                    <h3 class="mens-category-title">MENS</h3>
+                </div>
+
+                <div class="mens-cards">
+                    <div class="style-card style-card--mens" style="transition-delay: 0s;">
+                        <img src="assets/images/style_mens_01.jpg" alt="無造作に立たせたショート（横顔）">
+                        <div class="style-card-overlay">
+                            <h4>Natural</h4>
+                            <p>無造作に立たせた、抜け感のあるショート。</p>
+                        </div>
+                    </div>
+
+                    <div class="style-card style-card--mens" style="transition-delay: 0.1s; margin-top: 0;">
+                        <img src="assets/images/style_mens_02.jpg" alt="くせ毛を活かしたショートパーマ（横顔）">
+                        <div class="style-card-overlay">
+                            <h4>Curl</h4>
+                            <p>くせ毛を活かした、こなれ感のあるショートパーマ。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =============================================
+         FLOW
+         ※施術中の写真が無いため、店内の実写（座席・書棚・鏡・小物）を
+           雰囲気カットとして各ステップに割り当てている。alt属性は
+           実際の被写体を説明しており、「施術風景」と偽ってはいない。
+    ============================================= -->
+    <section id="flow">
+        <div class="flow-inner">
+            <h2 class="flow-big-title reveal">FLOW</h2>
+
+            <div class="flow-steps">
+
+                <!-- Step 01 -->
+                <div class="flow-step">
+                    <div class="flow-step-visual reveal-left">
+                        <span class="flow-step-number" aria-hidden="true">01</span>
+                        <div class="flow-step-img">
+                            <img src="assets/images/flow_01_seats.jpg" alt="店内の座席スペース">
+                        </div>
+                    </div>
+                    <div class="flow-step-text reveal">
+                        <p class="flow-step-label">STEP.01</p>
+                        <h3 class="flow-step-heading">カウンセリング</h3>
+                        <p class="flow-step-body">
+                            今の髪の状態と、なりたい雰囲気をゆっくりお伺いします。骨格や髪質を見ながら、ハサミの入れ方を変えて素材を活かす方向を一緒に考えます。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 02 -->
+                <div class="flow-step flow-step--reverse">
+                    <div class="flow-step-visual reveal-right">
+                        <span class="flow-step-number" aria-hidden="true">02</span>
+                        <div class="flow-step-img">
+                            <img src="assets/images/flow_02_bookshelf.jpg" alt="漫画・専門書が並ぶ棚">
+                        </div>
+                    </div>
+                    <div class="flow-step-text reveal">
+                        <p class="flow-step-label">STEP.02</p>
+                        <h3 class="flow-step-heading">デザイン提案</h3>
+                        <p class="flow-step-body">
+                            型にはめず、その日の気分や普段のスタイルに合わせて長さや質感を調整します。迷ったときは、遠慮なく相談してください。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 03 -->
+                <div class="flow-step">
+                    <div class="flow-step-visual reveal-left">
+                        <span class="flow-step-number" aria-hidden="true">03</span>
+                        <div class="flow-step-img">
+                            <img src="assets/images/flow_03_seats_mirrors.jpg" alt="セット面の椅子と鏡">
+                        </div>
+                    </div>
+                    <div class="flow-step-text reveal">
+                        <p class="flow-step-label">STEP.03</p>
+                        <h3 class="flow-step-heading">施術</h3>
+                        <p class="flow-step-body">
+                            丁寧なカットを基本に、必要に応じてカラーやストレートトリートメントもご案内します。仕上がりに立体感が出ることが期待できます。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 04 -->
+                <div class="flow-step flow-step--reverse">
+                    <div class="flow-step-visual reveal-right">
+                        <span class="flow-step-number" aria-hidden="true">04</span>
+                        <div class="flow-step-img">
+                            <img src="assets/images/flow_04_kewpie.jpg" alt="店内に飾られたキューピー人形のオブジェ">
+                        </div>
+                    </div>
+                    <div class="flow-step-text reveal">
+                        <p class="flow-step-label">STEP.04</p>
+                        <h3 class="flow-step-heading">お仕上げ・確認</h3>
+                        <p class="flow-step-body">
+                            最後に全体のバランスを整えてお仕上げします。ご自宅でも扱いやすいよう、お手入れのコツもお伝えします。
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- =============================================
+         MENU & PRICE
+         ※初回・再来の価格区分は情報収集時点で確認できていない（No Data）ため、
+           元テンプレの「初回／リピーター」の2区分ではなく、メニューの種類で
+           2ブロックに分けている。
+    ============================================= -->
+    <section id="menu">
+        <div class="menu-inner">
+            <h2 class="menu-big-title reveal">MENU &amp; PRICE</h2>
+            <p class="menu-subtitle reveal delay-100">4席のちいさなお店の、変わらない価格。</p>
+
+            <div class="menu-blocks">
+
+                <!-- カット -->
+                <div class="reveal">
+                    <h3 class="menu-block-heading">
+                        <span></span>
+                        CUT
+                    </h3>
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <span class="menu-item-name">カット</span>
+                            <span class="menu-item-price menu-item-price--accent">¥5,000〜</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- カラー・トリートメント -->
+                <div class="reveal delay-100">
+                    <h3 class="menu-block-heading">
+                        <span></span>
+                        COLOR / TREATMENT
+                    </h3>
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <span class="menu-item-name">低ダメージカラー＋カット</span>
+                            <span class="menu-item-price">¥12,000</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="menu-item-name">ストレートトリートメント</span>
+                            <span class="menu-item-price">¥5,500</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <p class="menu-note reveal">※カットはロング料金なし。上記以外にパーマ・ヘッドスパ等のメニューもあるようですが、価格の確認ができておりません（No Data）。※税込表記の明示・初回再来の価格区分は確認できていません。詳細はサロンへ直接お問い合わせください。</p>
+        </div>
+    </section>
+
+    <!-- =============================================
+         ACCESS
+    ============================================= -->
+    <section id="access">
+        <div class="access-inner">
+            <!-- 情報ブロック -->
+            <div class="access-info reveal-left">
+                <h2 class="access-big-title">ACCESS</h2>
+
+                <div class="access-details">
+                    <div class="access-detail-row">
+                        <span class="access-detail-label">Store</span>
+                        <span class="access-detail-value">
+                            ボッサボッサ<br>
+                            <span class="access-detail-note">bossabossa</span>
+                        </span>
+                    </div>
+                    <div class="access-detail-row">
+                        <span class="access-detail-label">Address</span>
+                        <span class="access-detail-value">
+                            〒332-0012<br>埼玉県川口市本町4-2-10<br>
+                            <span class="access-detail-note">建物名「浜清ビル」は未確認（依頼時ヒントのみ。外観写真右手の看板が該当建物の可能性あり）</span>
+                        </span>
+                    </div>
+                    <div class="access-detail-row">
+                        <span class="access-detail-label">Access</span>
+                        <span class="access-detail-value">川口駅東口より<br>徒歩2分</span>
+                    </div>
+                    <div class="access-detail-row">
+                        <span class="access-detail-label">Open</span>
+                        <span class="access-detail-value">
+                            10:00〜19:00 または 10:00〜21:00<br>
+                            <span class="access-detail-note">※情報源により営業時間の記載が異なり、確定できていません（No Data）。ご来店前にお電話でのご確認をおすすめします</span>
+                        </span>
+                    </div>
+                    <div class="access-detail-row">
+                        <span class="access-detail-label">Closed</span>
+                        <span class="access-detail-value">火曜日</span>
+                    </div>
+                    <div class="access-detail-row">
+                        <span class="access-detail-label">Tel</span>
+                        <span class="access-detail-value"><a href="tel:048-225-3385">048-225-3385</a></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Google Maps -->
+            <div class="access-map reveal">
+                <iframe
+                    src="https://maps.google.com/maps?q=%E5%9F%BC%E7%8E%89%E7%9C%8C%E5%B7%9D%E5%8F%A3%E5%B8%82%E6%9C%AC%E7%94%BA4-2-10&output=embed"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    title="ボッサボッサ アクセスマップ">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- =============================================
+         CTA
+    ============================================= -->
+    <section id="cta">
+        <div class="cta-bg-word" aria-hidden="true">RESERVE</div>
+
+        <div class="cta-inner reveal-scale">
+            <h2 class="cta-heading">Book Now</h2>
+            <p class="cta-tagline">肩の力を抜きに、どうぞ。</p>
+            <a href="tel:048-225-3385" id="reservation-btn" class="cta-btn" aria-label="電話で予約する">
+                Reservation
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                </svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- =============================================
+         フッター
+    ============================================= -->
+    <footer>
+        <a href="#" class="footer-logo">bossabossa</a>
+        <p class="footer-copy">&copy; 2026 ボッサボッサ. 本サイトは提案用サンプルです。</p>
+    </footer>
+
+    <!-- ページトップボタン -->
+    <button id="page-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="ページトップへ">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:1.2rem;height:1.2rem;">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+        </svg>
+    </button>
+
+    <!-- =============================================
+         JavaScript
+    ============================================= -->
+    <script>
+        document.documentElement.classList.remove('no-js');
+
+        // モバイルメニュー
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const iconOpen = document.getElementById('menu-icon-open');
+            const iconClose = document.getElementById('menu-icon-close');
+            const isOpen = menu.classList.toggle('open');
+            iconOpen.style.display  = isOpen ? 'none'  : 'block';
+            iconClose.style.display = isOpen ? 'block' : 'none';
+        }
+
+        // ヘッダースクロール
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 60) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        }, { passive: true });
+
+        // ページトップボタン
+        const pageTopBtn = document.getElementById('page-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) {
+                pageTopBtn.classList.add('visible');
+            } else {
+                pageTopBtn.classList.remove('visible');
+            }
+        }, { passive: true });
+
+        // スクロールアニメーション (Intersection Observer)
+        document.addEventListener('DOMContentLoaded', () => {
+            const targets = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+
+            // 非対応環境では監視できないので、最初から全部表示する
+            if (!('IntersectionObserver' in window)) {
+                targets.forEach(el => el.classList.add('active'));
+                return;
+            }
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                root: null,
+                rootMargin: '0px 0px -60px 0px',
+                threshold: 0.12
+            });
+
+            targets.forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>
